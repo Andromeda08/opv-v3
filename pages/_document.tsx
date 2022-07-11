@@ -26,6 +26,8 @@ class MyDocument extends Document {
           <meta property='og:title' content='osu!pv' />
           <meta property='og:description' content='View your and other players osu! profiles.' />
           <meta property='og:image' content='/icon.png' />
+          <meta property="og:image:width" content="96" />
+          <meta property="og:image:height" content="96" />
 
           <link rel="canonical" href="https://opv.tsukiakari.studio" />
 

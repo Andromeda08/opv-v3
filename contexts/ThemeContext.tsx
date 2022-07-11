@@ -10,7 +10,7 @@ import {
 import { ThemeCtxType, Theme } from '@Types/context';
 
 const ThemeContextDefaultValues: ThemeCtxType = {
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
   setTheme: () => {},
 };
@@ -22,7 +22,7 @@ export const useThemeContext = () => useContext(ThemeContext);
 export const ThemeProvider : FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const [ theme, _setTheme ] = useState<Theme>('light');
+  const [ theme, _setTheme ] = useState<Theme>(ThemeContextDefaultValues.theme);
 
   const changeTheme = (t: Theme) => {
     localStorage.setItem('theme', t);

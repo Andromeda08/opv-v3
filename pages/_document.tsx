@@ -17,7 +17,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="theme-color" content="#a855f7" />
+          <meta name="theme-color" content="#f472b6" />
           <meta name="description" content="osu! profile viewer" />
           <meta name="keywords" content="osu osu! osu!game osugame player profile viewer"/>
 

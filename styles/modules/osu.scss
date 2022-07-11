@@ -14,7 +14,7 @@
 }
 
 .osu_page-layout {
-  @apply w-full min-h-[100vh] shadow-lg p-10 flex justify-center gap-4 transition-colors duration-150;
+  @apply w-full min-h-[100vh] shadow-lg p-6 md:p-10 flex justify-center gap-4 transition-colors duration-150;
   @apply flex-col md:flex-row;
   @apply bg-zinc-100 text-zinc-900;
   @apply dark:bg-zinc-900 dark:text-zinc-100;

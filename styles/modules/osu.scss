@@ -15,6 +15,7 @@
 
 .osu_page-layout {
   @apply w-full min-h-[100vh] shadow-lg p-10 flex justify-center gap-4 transition-colors duration-150;
+  @apply flex-col md:flex-row;
   @apply bg-zinc-100 text-zinc-900;
   @apply dark:bg-zinc-900 dark:text-zinc-100;
 }
@@ -25,6 +26,7 @@
   .madeby {
     @apply h-full min-w-[320px] px-4 py-2 text-sm flex justify-center transition-colors duration-150;
     @apply text-zinc-400 hover:text-zinc-500 dark:text-zinc-700 hover:dark:text-zinc-600;
+    @apply hidden md:flex;
     @extend .hover-bordered;
   }
 }
@@ -105,7 +107,8 @@
 }
 
 .osu_score-list {
-  @apply h-fit w-full max-w-xl p-4;
+  @apply md:max-w-xl;
+  @apply h-fit w-full p-4;
   @apply flex flex-col gap-2;
   @extend .hover-bordered;
 
@@ -121,6 +124,7 @@
 
   .osu_score-rank {
     @apply w-1 h-8 rounded-xl transition-colors duration-150;
+    @apply md:h-10 lg:h-8;
   }
 
   .osu_score-details {
@@ -141,6 +145,7 @@
 
   .osu_score-pp {
     @apply ml-auto font-bold transition-colors duration-150;
+
     & > .text {
       @apply text-zinc-400 dark:text-zinc-600 font-normal text-sm;
     }
@@ -148,9 +153,11 @@
 }
 
 .osu_theme-switcher {
-  @apply absolute bottom-8 right-8 p-2 rounded-full text-white cursor-pointer;
+  @apply fixed bottom-8 right-8 p-2 rounded-full text-white cursor-pointer;
   @apply bg-pink-500;
+
   z-index: 3;
+
   & > * {
     position: relative;
     height: 28px;

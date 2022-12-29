@@ -35,17 +35,10 @@
   @apply h-fit w-full md:max-w-xl flex flex-col gap-4;
   
   & > header {
-    @apply h-[46px] flex items-center gap-4;
-    
-    .btn--me {
-      @extend .hover-bordered;
-      @apply h-full px-4 whitespace-nowrap text-zinc-900 dark:text-zinc-400;
-      @apply hover:border-mocha-mauve hover:dark:border-mocha-mauve;
-      @apply transition-colors;
-    }
+    @apply h-fit flex flex-col md:flex-row items-center gap-4;
 
     & > nav {
-      @apply h-full w-full flex gap-4 items-center px-4;
+      @apply h-[46px] w-full flex gap-4 items-center px-4;
       @extend .hover-bordered;
 
       .item {
@@ -53,6 +46,17 @@
         &.active {
           @apply dark:text-zinc-400 text-zinc-900;
         }
+      }
+    }
+
+    & > div {
+      @apply h-[46px] w-full md:w-fit flex items-center gap-4;
+
+      .btn--me {
+        @extend .hover-bordered;
+        @apply h-full w-full md:w-fit px-4 whitespace-nowrap text-zinc-900 dark:text-zinc-400;
+        @apply hover:border-mocha-mauve hover:dark:border-mocha-mauve;
+        @apply transition-colors;
       }
     }
   }

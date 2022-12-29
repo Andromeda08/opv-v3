@@ -29,12 +29,12 @@ const ScoreTypeHeader: React.FC = () => {
         <NavItem t='firsts' v='firsts' onClick={ onScoreTypeSelected } />
         <NavItem t='recent' v='recents' onClick={ onScoreTypeSelected } />
       </nav>
-      <Link href='/'>
-        <button className='btn--me'>me!</button>
-      </Link>
-      {
-        session ? <SignOutButton /> : <SignInButton />
-      }
+      <div>
+        <Link href='/'>
+          <button className='btn--me'>me!</button>
+        </Link>
+        { session ? <SignOutButton /> : <SignInButton /> }
+      </div>
     </header>
   )
 };

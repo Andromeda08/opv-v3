@@ -31,8 +31,35 @@
   }
 }
 
+.osu_right-col {
+  @apply h-fit w-full md:max-w-xl flex flex-col gap-4;
+  
+  & > header {
+    @apply h-[46px] flex items-center gap-4;
+    
+    .btn--me {
+      @extend .hover-bordered;
+      @apply h-full px-4 whitespace-nowrap text-zinc-900 dark:text-zinc-400;
+      @apply hover:border-mocha-mauve hover:dark:border-mocha-mauve;
+      @apply transition-colors;
+    }
+
+    & > nav {
+      @apply h-full w-full flex gap-4 items-center px-4;
+      @extend .hover-bordered;
+
+      .item {
+        @apply cursor-pointer text-zinc-500 hover:text-zinc-900 hover:dark:text-zinc-400 transition-colors;
+        &.active {
+          @apply dark:text-zinc-400 text-zinc-900;
+        }
+      }
+    }
+  }
+}
+
 .osu_search-bar {
-  @apply h-full min-w-[320px] px-4 py-2;
+  @apply h-full min-w-[320px] relative px-4 py-2;
   @apply focus-within:border-zinc-500 focus-within:dark:border-zinc-600;
   @extend .hover-bordered;
 
@@ -48,6 +75,12 @@
       @apply text-zinc-900 hover:text-zinc-600 transition-colors duration-150;
       @apply dark:text-zinc-600 hover:dark:text-zinc-300;
     }
+  }
+
+  .osu_sb-error {
+    @apply absolute px-4 py-2 text-sm text-mocha-red dark:text-mocha-red whitespace-nowrap;
+    @apply left-1/2 -translate-x-1/2 -top-9;
+    animation: fadeOut 2s ease-in-out 2.5s forwards;
   }
 }
  
@@ -70,10 +103,14 @@
       }
   
       .osu_player-name {
-        @apply h-24 flex flex-col justify-center px-4;
+        @apply h-24 flex gap-4 items-center px-4;
   
         & > h3 {
           @apply text-xl font-extrabold text-white;
+        }
+
+        & > img {
+          @apply h-5 w-auto;
         }
       }
     }
@@ -81,6 +118,9 @@
     .osu_player-header-bg {
       @apply h-24 w-full absolute top-0 left-0 overflow-hidden z-0 opacity-75;
       @apply dark:opacity-[0.55];
+      & > img {
+        @apply w-full h-full object-cover;
+      }
     }
   }
 
@@ -101,8 +141,23 @@
       .name {
         @apply ml-auto text-sm text-zinc-400 dark:text-zinc-600 transition-colors duration-150;
       }
-    }
+    } 
+  }
+
+  .osu_player-grades {
+    @apply w-full flex items-center justify-between px-4 pb-4;
+
+    & > .osu_player-grade {
+      @apply flex gap-2 text-sm items-center text-zinc-400 dark:text-zinc-600;
     
+      .markers {
+        @apply flex items-center gap-[3px];
+    
+        & > .marker {
+          @apply w-1 h-4 rounded-xl;
+        }
+      }
+    }
   }
 }
 
@@ -120,7 +175,7 @@
 .osu_score {
   @apply flex items-center gap-2 p-2;
   @apply dark:text-zinc-300;
-  @extend .bordered;
+  @extend .hover-bordered;
 
   .osu_score-rank {
     @apply w-1 h-8 rounded-xl transition-colors duration-150;
@@ -139,22 +194,30 @@
     }
 
     .osu_score-bm-version {
-      @apply text-zinc-600 dark:text-zinc-400 italic;
+      @apply w-full text-zinc-600 dark:text-zinc-400 italic;
     }
   }
 
-  .osu_score-pp {
-    @apply ml-auto font-bold transition-colors duration-150;
+  .end {
+    @apply ml-auto flex items-center gap-2;
 
-    & > .text {
-      @apply text-zinc-400 dark:text-zinc-600 font-normal text-sm;
+    .osu_score-mods {
+      @apply text-sm font-medium flex items-center h-full gap-1;
+    }
+  
+    .osu_score-pp {
+      @apply justify-end font-bold transition-colors duration-150;
+  
+      & > .text {
+        @apply text-zinc-400 dark:text-zinc-600 font-normal text-sm;
+      }
     }
   }
 }
 
 .osu_theme-switcher {
   @apply fixed bottom-4 right-4 md:bottom-8 md:right-8 p-2 rounded-full text-white cursor-pointer;
-  @apply bg-pink-500;
+  @apply bg-mocha-mauve;
 
   z-index: 3;
 
@@ -166,12 +229,14 @@
 }
 
 .rank--ssh,
-.rank--sh {
+.rank--sh,
+.rank--xh {
   @apply text-zinc-400 dark:text-zinc-200;
 }
 
 .rank--ss,
-.rank--s {
+.rank--s,
+.rank--x {
   @apply text-amber-400 dark:text-amber-200;
 }
 
@@ -192,13 +257,15 @@
 }
 
 
-.rank-bg-ssh,
-.rank-bg--sh {
+.rank-bg--ssh,
+.rank-bg--sh,
+.rank-bg--xh {
   @apply bg-zinc-400 dark:bg-zinc-200;
 }
 
 .rank-bg--ss,
-.rank-bg--s {
+.rank-bg--s,
+.rank-bg--x {
   @apply bg-amber-400;
 }
 
@@ -216,4 +283,56 @@
 
 .rank-bg--d {
   @apply bg-rose-400;
+}
+
+.btn--signout {
+  @extend .hover-bordered;
+  @apply h-full px-4 whitespace-nowrap text-zinc-900 dark:text-zinc-400;
+  @apply hover:border-mocha-red hover:dark:border-mocha-red;
+  @apply transition-colors;
+} 
+
+.login_page {
+  @apply w-full min-h-[100vh] flex flex-col gap-8 items-center justify-center transition-colors;
+  @apply bg-zinc-100 text-zinc-900;
+  @apply dark:bg-zinc-900 dark:text-zinc-100;
+
+  .main {
+    @apply flex items-center gap-4;
+
+    & > img {
+      @apply w-24 h-24;
+    }
+
+    .text {
+      @apply flex flex-col;
+
+      & > h1 {
+        @apply text-6xl font-bold;
+      }
+
+      & > p {
+        @apply text-zinc-600 dark:text-zinc-400;
+      }
+    }
+  }
+
+  .btn--cta-login {
+    @extend .hover-bordered;
+    @apply h-full px-4 py-2 text-lg font-medium whitespace-nowrap;
+    @apply text-mocha-red dark:text-mocha-red hover:text-zinc-600 hover:dark:text-zinc-300;
+    @apply hover:border-pink-500 hover:dark:border-pink-500;
+    @apply hover:-translate-y-1 transition-all;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
 }

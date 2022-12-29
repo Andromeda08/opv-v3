@@ -1,94 +1,63 @@
-// @ts-nocheck
-import { FC, useState } from 'react';
-
-import { GetServerSideProps } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
-
-import { osuFetch } from '@Utility/functions';
-
-import { SearchBar } from '@Components/Osu/SearchBar';
-import { ScoreList } from '@Components/Osu/ScoreList';
-import { PlayerSummary } from '@Components/Osu/PlayerSummary';
+import type { NextPage, GetServerSideProps } from 'next';
+import type { OsuScore } from '@Types/score';
+import useSWR from 'swr';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useStateContext } from '@Contexts/StateContext';
-import { useThemeContext } from '@Contexts/ThemeContext';
-import { ThemeSwitcher } from '@Components/Osu/ThemeSwitcher';
+import { Loader } from '@Components/Spinner';
+import PlayerStats from '@Components/Player';
+import ScoreItem from '@Components/Scores/ScoreItem';
+import ProfileLayout from '@Components/ProfileLayout';
+import LoginPage from '@Components/LoginPage';
+import { Layout } from '@Components/Layout';
+import Head from 'next/head';
 
-const Osu: FC<{
-  _user: any;
-  _scores: any;
-  _beatmaps: any;
-}> = ({ _user, _scores, _beatmaps }) => {
-  const { theme } = useThemeContext();
-  const { setLoading } = useStateContext();
+interface Props {
+  msg?: string;
+}
+
+const scoreFetcher = (url: string) => axios.get(url).then(r => r.data);
+
+const MyProfile: NextPage<Props> = ({ msg }) => {  
+  const { data: session } = useSession();
+  const { activeScoreType } = useStateContext();
+  const { data: scores, error, isLoading } = useSWR<OsuScore[]>(`/api/osu/scores/${ session?.osu?.id }/${ activeScoreType }`, scoreFetcher);
   
-  const [ user, setUser ] = useState(_user);
-  const [ scores, setScores ] = useState(_scores);
-  const [ beatmaps, setBeatmaps ] = useState(_beatmaps);
-
-  const fetchPlayer = async (username: string) => {
-    const { user, scores, beatmaps } = await osuFetch(process.env.NEXT_PUBLIC_API_KEY, username);
-
-    if (!(user.length === 0)) {
-      setUser(user[0]);
-      setScores(scores);
-      setBeatmaps(beatmaps);
-      setLoading(false);
-      return;
-    }
-    else {
-      fetchPlayer("-Andromeda-");
-    }
-  }
-
-  const submitSearch = (event: any) => {
-    event.preventDefault();
-    if (event.target.username.value) {
-      setLoading(true);
-      fetchPlayer(event.target.username.value);
-    }
-  }
+  if (session) {
+    return (
+      <Layout>
+        <Head>
+          <title>{`osu!pv • ${ session?.osu?.username }`}</title>
+        </Head>
+        <ProfileLayout playerStats={ <PlayerStats user={ session?.osu! } /> } msg={ msg }>
+          {
+            isLoading
+            ? <Loader />
+            : scores?.map((s: OsuScore, i: number) => <ScoreItem score={s} key={i} />)
+          }
+        </ProfileLayout> 
+      </Layout>
+    );
+  };
 
   return (
-    <div className={(theme === 'dark') ? 'dark' : ''}>
-      <div className='osu_page-layout'>
-        <Head>
-          <title>osu!pv • { user.username }</title>
-        </Head>
-        <div className='osu_left-col'>
-          <SearchBar onSubmit={ submitSearch } username={ user.username } />
-          <PlayerSummary player={ user }/>
-          <div className='madeby'>
-            <Link
-              href='https://osu.ppy.sh/users/6428418'
-              target='_blank'
-            >
-                <a>made by -Andromeda-</a>
-            </Link>
-          </div>
-        </div>
-        <ScoreList scores={ scores } beatmaps={ beatmaps } />
-      </div>
-      <ThemeSwitcher />
-    </div>
+    <Layout>
+      <Head>
+        <title>osu!pv</title>
+      </Head>
+      <LoginPage />
+    </Layout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const { user, scores, beatmaps } = await osuFetch(process.env.NEXT_PUBLIC_API_KEY);
-
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=120'
-  )
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { msg } = context.query;
 
   return {
     props: {
-      _user: user[0],
-      _scores: scores,
-      _beatmaps: beatmaps
-    }
+      msg: (msg) ? msg : null
+    },
   };
 };
 
-export default Osu;
+export default MyProfile;

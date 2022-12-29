@@ -19,3 +19,9 @@ export const Spinner : React.FC = ({}) => {
     </div>
   );
 }
+
+export const Loader = () => (
+  <div className='flex items-center justify-center p-4'>
+    <Spinner />
+  </div>
+);

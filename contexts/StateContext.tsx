@@ -1,32 +1,29 @@
-import {
-  FC,
-  ReactNode,
-  createContext,
-  useContext,
-  useState
-} from 'react';
+import type { StateContextType } from '@Types/context';
+import type { ScoreType } from '@Types/score';
+import type { FC, ReactNode } from 'react'; 
+import { createContext, useContext, useState } from 'react';
 
-import { StateCtxType } from '@Types/context';
-
-const StateContextDefaultValues: StateCtxType = {
-  loading: false,
-  setLoading: () => {},
+interface Props {
+  children: ReactNode,
 };
 
-const StateContext = createContext<StateCtxType>(StateContextDefaultValues);
+const StateContextDefaultValues: StateContextType = {
+  activeScoreType: 'best',
+  setActiveScoreType: () => {},
+};
+
+const StateContext = createContext<StateContextType>(StateContextDefaultValues);
 
 export const useStateContext = () => useContext(StateContext);
 
-export const StateProvider : FC<{
-  children: ReactNode;
-}> = ({ children }) => {
-  const [ loading, _setLoading ] = useState<boolean>(StateContextDefaultValues.loading);
+export const StateProvider: FC<Props> = ({ children }) => {
+  const [ _activeScoreType, _setActiveScoreType ] = useState<ScoreType>(StateContextDefaultValues.activeScoreType);
 
-  const setLoading = (state: boolean) => _setLoading(state);
+  const setActiveScoreType = (t: ScoreType) => _setActiveScoreType(t);
 
-  const value: StateCtxType = {
-    loading,
-    setLoading
+  const value: StateContextType = {
+    activeScoreType: _activeScoreType,
+    setActiveScoreType
   };
 
   return (

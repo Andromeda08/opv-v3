@@ -1,3 +1,5 @@
+import { ScoreType } from "./score";
+
 export type Theme = 'light' | 'dark';
 
 export type ThemeCtxType = {
@@ -6,7 +8,7 @@ export type ThemeCtxType = {
   setTheme: (theme: Theme) => void;
 };
 
-export type StateCtxType = {
-  loading: boolean;
-  setLoading: (state: boolean) => void;
+export type StateContextType = {
+  activeScoreType: ScoreType;
+  setActiveScoreType: (p1: ScoreType) => void;
 };

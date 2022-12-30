@@ -1,4 +1,4 @@
-export type ScoreType = 'best' | 'firsts' | 'recent';
+export type ScoreType = 'best' | 'firsts' | 'recent' | 'beatmaps';
 
 export type OsuUserCompact = {
   avatar_url: string;

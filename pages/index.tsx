@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useStateContext } from '@Contexts/StateContext';
 import { Loader } from '@Components/Spinner';
 import PlayerStats from '@Components/Player';
-import ScoreItem from '@Components/Scores/ScoreItem';
+import ScoreList from '@Components/Scores/ScoreList';
 import ProfileLayout from '@Components/ProfileLayout';
 import LoginPage from '@Components/LoginPage';
 import { Layout } from '@Components/Layout';
@@ -33,7 +33,7 @@ const MyProfile: NextPage<Props> = ({ msg }) => {
           {
             isLoading
             ? <Loader />
-            : scores?.map((s: OsuScore, i: number) => <ScoreItem score={s} key={i} />)
+            : <ScoreList data={ scores! } />
           }
         </ProfileLayout> 
       </Layout>

@@ -16,6 +16,10 @@ const ScoreTypeHeader: React.FC = () => {
     setActiveScoreType(t);
   };
 
+  const Dot: React.FC = () => (
+    <div className='w-[2px] h-[12px] bg-zinc-400 dark:bg-zinc-700 rounded-full' />
+  );
+
   const NavItem: React.FC<{ t: ScoreType, v: string, onClick: (s: ScoreType) => void }> = ({ t, v, onClick }) => {
     return (
       <button className={(activeScoreType === t) ? 'item active' : 'item'} onClick={ () => onClick(t) }>{ v }</button>

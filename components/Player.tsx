@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { OsuUser } from '@Types/user';
+import Link from 'next/link';
 import { secondsToHnM } from '@Utility/functions';
 
 export interface PlayerStatsProps {
@@ -9,7 +10,7 @@ export interface PlayerStatsProps {
 const PlayerStats: FC<PlayerStatsProps> = ({ user }) => {
   interface Statistic { value: any, name: string };
 
-  const { statistics, username, avatar_url, cover, country } = user;
+  const { statistics, username, avatar_url, cover, country, id } = user;
 
   const Marker: FC<{ color: string }> = ({ color }) => <div className={`marker ${ color }`} />;
 
@@ -33,6 +34,10 @@ const PlayerStats: FC<PlayerStatsProps> = ({ user }) => {
     {
       value: statistics.play_count,
       name: 'play count',
+    },
+    {
+      value: statistics.maximum_combo,
+      name: 'maximum combo',
     },
     {
       value: secondsToHnM(statistics.play_time),
@@ -92,7 +97,9 @@ const PlayerStats: FC<PlayerStatsProps> = ({ user }) => {
             <img src={avatar_url} alt='user profile picture' />
           </div>
           <div className='osu_player-name'>
-            <h3>{ username }</h3>
+            <Link href={`https://osu.ppy.sh/users/${ id }`} target='_blank'>
+              <a className='cursor-pointer'>{ username }</a>
+            </Link>
             <img src={`/flags/${country?.code ?? '__'}.png`} alt="" />
           </div>  
         </div>

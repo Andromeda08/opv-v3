@@ -1,22 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #71717a transparent;
-}
-
 *::-webkit-scrollbar {
   width: 8px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #18181b;
+  @apply bg-zinc-800;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #71717a;
-  border-radius: 20px;
-  border: 1px solid #71717a;
+  @apply bg-zinc-500 border-zinc-500 rounded-full;
 }

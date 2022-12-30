@@ -33,9 +33,7 @@ const ProfileLayout: FC<ProfileProps> = ({ playerStats, children, msg }) => {
       </section>
       <div className='osu_right-col'>
         <ScoreTypeHeader />
-        <div className='osu_score-list'>
-          { children }
-        </div>
+        { children }
       </div>
     </main>
   );

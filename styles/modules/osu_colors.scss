@@ -1,0 +1,81 @@
+.rank--ssh,
+.rank--sh,
+.rank--xh {
+  @apply text-zinc-400 dark:text-zinc-200;
+}
+
+.rank--ss,
+.rank--s,
+.rank--x {
+  @apply text-amber-400 dark:text-amber-200;
+}
+
+.rank--a {
+  @apply text-emerald-400 dark:text-emerald-200;
+}
+
+.rank--b {
+  @apply text-sky-400 dark:text-sky-200;
+}
+
+.rank--c {
+  @apply text-violet-400 dark:text-violet-200;
+}
+
+.rank--d {
+  @apply text-rose-400 dark:text-rose-200;
+}
+
+
+.rank-bg--ssh,
+.rank-bg--sh,
+.rank-bg--xh {
+  @apply bg-zinc-400 dark:bg-zinc-200;
+}
+
+.rank-bg--ss,
+.rank-bg--s,
+.rank-bg--x {
+  @apply bg-amber-400;
+}
+
+.rank-bg--a {
+  @apply bg-emerald-400;
+}
+
+.rank-bg--b {
+  @apply bg-sky-400;
+}
+
+.rank-bg--c {
+  @apply bg-violet-400;
+}
+
+.rank-bg--d {
+  @apply bg-rose-400;
+}
+
+.mod--hd {
+  @apply text-amber-500 dark:text-amber-300;
+}
+
+.mod--hr,
+.mod--sd,
+.mod--pf {
+  @apply text-rose-500 dark:text-rose-400;
+}
+
+.mod--dt,
+.mod--nc {
+  @apply text-violet-500 dark:text-violet-400;
+}
+
+.mod--nf,
+.mod--ht,
+.mod--ez {
+  @apply text-emerald-500 dark:text-emerald-400;
+}
+
+.mod--so {
+  @apply text-sky-500 dark:text-sky-300;
+}

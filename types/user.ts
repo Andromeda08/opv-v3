@@ -12,6 +12,10 @@ export interface OsuUser {
     name: string,
   },
   statistics: OsuStatistics,
+  graveyard_beatmapset_count: number,
+  loved_beatmapset_count: number,
+  pending_beatmapset_count: number,
+  ranked_beatmapset_count: number,
 };
 
 export interface OsuLevel {

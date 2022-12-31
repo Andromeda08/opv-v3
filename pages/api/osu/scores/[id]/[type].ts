@@ -12,13 +12,14 @@ export default async (
     const { access_token } = token;
     
     const valid_types = [ 'best', 'firsts', 'recent' ];
-    const { id, type } = req.query;
+    const { id, type, limit } = req.query;
 
     if (typeof type === 'string' && !valid_types.includes(type)) {
       res.status(400).end();
     }
 
-    const scores: OsuScore[] = await fetch(`https://osu.ppy.sh/api/v2/users/${id}/scores/${type}?limit=15`, {
+    const l = limit ?? 25;
+    const scores: OsuScore[] = await fetch(`https://osu.ppy.sh/api/v2/users/${id}/scores/${type}?limit=${l}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

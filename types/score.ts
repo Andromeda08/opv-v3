@@ -1,4 +1,5 @@
-export type ScoreType = 'best' | 'firsts' | 'recent' | 'beatmaps';
+export type ScoreType = 'best' | 'firsts' | 'recent';
+export type BeatmapType = 'favourite' | 'graveyard' | 'loved' | 'pending' | 'ranked';
 
 export type OsuUserCompact = {
   avatar_url: string;
@@ -111,4 +112,5 @@ export type OsuBeatmapSet = {
   track_id: any | null;
   user_id: number;
   video: boolean;
+  beatmaps?: OsuBeatmap[];
 };

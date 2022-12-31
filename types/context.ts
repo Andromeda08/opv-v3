@@ -1,14 +1,16 @@
-import { ScoreType } from "./score";
+import { ScoreType } from '@Types/score';
 
+/* Context: Theme */
 export type Theme = 'light' | 'dark';
-
-export type ThemeCtxType = {
+export type ThemeContextType = {
   theme: Theme;
   toggleTheme: () => void;
   setTheme: (theme: Theme) => void;
 };
 
+/* Context: State */
+export type TabType = ScoreType | 'beatmaps';
 export type StateContextType = {
-  activeScoreType: ScoreType;
-  setActiveScoreType: (p1: ScoreType) => void;
+  activeTab: TabType;
+  setActiveTab: (p1: TabType) => void;
 };

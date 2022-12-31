@@ -10,25 +10,36 @@ import ProfileLayout from '@Components/ProfileLayout';
 import { useStateContext } from '@Contexts/StateContext';
 import { Layout } from '@Components/Layout';
 import Head from 'next/head';
+import BeatmapList from '@Components/Beatmaps/BeatmapList';
 
 const fetcher = (url: string) => axios.get(url).then(r => r.data);
 
 const UserProfile: NextPage<{ userId: number, msg: string }> = ({ userId, msg }) => {
-  const { data: session } = useSession();
-  const { activeScoreType } = useStateContext();
+  const { activeTab } = useStateContext();
   const { data: player, error: e1, isLoading: userIsLoading } = useSWR(`/api/osu/users/${ userId }`, fetcher);
-  const { data: scores, error: e2, isLoading: scoresIsLoading } = useSWR<OsuScore[]>(`/api/osu/scores/${ userId }/${ activeScoreType }`, fetcher);
 
   return (
     <Layout>
       <Head>
         <title>{`osu!pv${player ? ` • ${ player?.username }` : ''}`}</title>
       </Head>
-      <ProfileLayout playerStats={ userIsLoading ? <div className='hover-bordered'><Loader /></div> : <PlayerStats user={ player } /> } msg={ msg }>
+      <ProfileLayout playerStats={ userIsLoading ? <Loader /> : <PlayerStats user={ player } /> } msg={ msg }>
         {
-          scoresIsLoading
-          ? <Loader />
-          : <ScoreList data={ scores! } />
+          (activeTab !== 'beatmaps')
+          ? userIsLoading
+            ? <Loader />
+            : <ScoreList userId={ player.id } />
+          : userIsLoading
+            ? <Loader />
+            : <BeatmapList
+                userId={ userId }
+                counts={{
+                  graveyard: player.graveyard_beatmapset_count,
+                  loved: player.loved_beatmapset_count,
+                  pending: player.pending_beatmapset_count,
+                  ranked: player.ranked_beatmapset_count,
+                }}
+              />
         }
       </ProfileLayout>
     </Layout>

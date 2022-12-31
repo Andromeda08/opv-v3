@@ -23,13 +23,13 @@ const ProfileLayout: FC<ProfileProps> = ({ playerStats, children, msg }) => {
   return (
     <main className='osu_page-layout'>
       <section className='osu_left-col'>
-      <SearchBar onSubmit={ onSubmitSearch } error={ msg }/>
-          { playerStats }
-          <div className='madeby'>
-            <Link href='https://osu.ppy.sh/users/6428418' target='_blank'>
-              <a>made by -Andromeda-</a>
-            </Link>
-          </div>
+        <SearchBar onSubmit={ onSubmitSearch } error={ msg }/>
+        { playerStats }
+        <div className='madeby'>
+          <Link href='https://osu.ppy.sh/users/6428418' target='_blank'>
+            <a>made by -Andromeda-</a>
+          </Link>
+        </div>
       </section>
       <div className='osu_right-col'>
         <ScoreTypeHeader />

@@ -1,5 +1,4 @@
 import type { NextPage, GetServerSideProps } from 'next';
-import type { OsuScore } from '@Types/score';
 import useSWR from 'swr';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
@@ -11,18 +10,19 @@ import ProfileLayout from '@Components/ProfileLayout';
 import LoginPage from '@Components/LoginPage';
 import { Layout } from '@Components/Layout';
 import Head from 'next/head';
+import BeatmapList from '@Components/Beatmaps/BeatmapList';
 
 interface Props {
   msg?: string;
 }
 
-const scoreFetcher = (url: string) => axios.get(url).then(r => r.data);
+const fetcher = (url: string) => axios.get(url).then(r => r.data);
 
 const MyProfile: NextPage<Props> = ({ msg }) => {  
   const { data: session } = useSession();
-  const { activeScoreType } = useStateContext();
-  const { data: scores, error, isLoading } = useSWR<OsuScore[]>(`/api/osu/scores/${ session?.osu?.id }/${ activeScoreType }`, scoreFetcher);
-  
+  const { activeTab } = useStateContext();
+  const { data: player, error, isLoading: isLoading } = useSWR(`/api/osu/users/${ session?.osu?.id }`, fetcher);
+
   if (session) {
     return (
       <Layout>
@@ -31,9 +31,21 @@ const MyProfile: NextPage<Props> = ({ msg }) => {
         </Head>
         <ProfileLayout playerStats={ <PlayerStats user={ session?.osu! } /> } msg={ msg }>
           {
-            isLoading
-            ? <Loader />
-            : <ScoreList data={ scores! } />
+            (activeTab !== 'beatmaps')
+            ? isLoading
+              ? <Loader />
+              : <ScoreList userId={ player.id } />
+            : isLoading
+              ? <Loader />
+              : <BeatmapList
+                  userId={ player.id }
+                  counts={{
+                    graveyard: player.graveyard_beatmapset_count,
+                    loved: player.loved_beatmapset_count,
+                    pending: player.pending_beatmapset_count,
+                    ranked: player.ranked_beatmapset_count,
+                  }}
+                />
           }
         </ProfileLayout> 
       </Layout>

@@ -1,5 +1,9 @@
 @import 'osu_colors.scss';
 
+.ellipsed {
+  @apply text-ellipsis overflow-hidden whitespace-nowrap;
+}
+
 .bordered {
   @apply rounded-xl border border-zinc-300;
   @apply dark:border-zinc-800 dark:text-zinc-600;
@@ -12,7 +16,7 @@
 }
 
 .osu_page-layout {
-  @apply w-full min-h-[100vh] shadow-lg p-6 md:p-10 flex justify-center gap-4 transition-colors duration-150;
+  @apply w-full min-h-[100vh] shadow-lg p-6 md:p-10 flex md:justify-center gap-4 transition-colors duration-150;
   @apply flex-col md:flex-row;
   @apply bg-zinc-100 text-zinc-900;
   @apply dark:bg-zinc-900 dark:text-zinc-100;
@@ -230,6 +234,140 @@
   }
 }
 
+.osu_beatmap-list {
+  @apply h-fit w-full p-4;
+  @apply flex flex-col gap-2;
+  @extend .hover-bordered;
+
+  & .osu_beatmap-section {
+    @apply flex flex-col gap-2;
+
+    & > .title {
+      @apply flex items-center gap-2;
+      & > h3 {
+        @apply text-zinc-600 dark:text-zinc-500;
+      }
+      & > .count {
+        @apply px-2 text-sm font-bold rounded-full;
+        @apply bg-zinc-200 text-violet-400;
+        @apply dark:bg-zinc-800 dark:text-mocha-mauve;
+      }
+    }
+    
+    & > .sets {
+      @apply gap-2;
+      @apply flex flex-col;
+      @apply md:grid md:grid-cols-2;
+    }
+  }
+}
+
+.osu_beatmap-set {
+  @extend .hover-bordered;
+  @apply relative flex flex-col gap-1;
+
+  & >.song {
+    @apply bg-zinc-900;
+    @apply relative overflow-hidden h-fit rounded-xl p-2 flex flex-col cursor-pointer;
+
+    & > .title {
+      @apply text-zinc-100 dark:text-zinc-300 font-bold z-10;
+      @extend .ellipsed;
+    }
+    & > .artist {
+      @apply text-sm text-zinc-300 dark:text-zinc-500 z-10;
+      @extend .ellipsed;
+    }
+    & > .bg {
+      @apply opacity-50;
+      @apply absolute top-0 left-0 dark:opacity-20 pointer-events-none;
+    }
+  }
+  
+  & > .details {
+    @apply px-2 flex gap-4 text-zinc-800 dark:text-zinc-600;
+    & > .info {
+      @apply flex items-center gap-1 text-sm font-bold;
+    }
+  }
+
+  & > .bottom {
+    @apply relative h-fit px-2 pb-2 flex gap-2 items-center;
+
+    &:hover {
+      .versions-big {
+        @apply visible opacity-100;
+      }
+    }
+
+    .marker {
+      @apply w-[6px] h-4 rounded-xl transition-all;
+    }
+
+    .status {
+      @apply px-1 rounded-xl uppercase text-xs font-bold;
+
+      &.ranked,
+      &.approved {
+        @apply bg-emerald-300 text-emerald-900;
+      }
+
+      &.loved {
+        @apply bg-pink-300 text-pink-900;
+      }
+
+      &.pending {
+        @apply bg-amber-300 text-amber-900;
+      }
+
+      &.graveyard {
+        @apply bg-zinc-400 text-zinc-900;
+      }
+    }
+
+    .versions {
+      @apply flex gap-[2px] overflow-hidden;
+
+        /*&:hover {
+          @apply w-fit px-1;
+
+          & > .extra {
+            @apply visible opacity-100;
+          }
+        }*/
+    }
+
+    .versions-big {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      @apply invisible opacity-0 transition-all;
+      @apply absolute bottom-0 left-0 min-h-[114px] max-h-[264px] overflow-y-scroll flex flex-col gap-1 p-2 z-20;
+      @apply bg-zinc-100 dark:bg-zinc-900;
+      @apply w-full;
+      @apply rounded-xl border border-pink-400;
+      
+      .version {
+        @apply font-medium;
+        @apply flex items-center gap-1 text-zinc-600 hover:text-zinc-900 dark:text-zinc-500 text-sm hover:dark:text-zinc-300 transition-colors;
+        
+        & > .marker {
+          @apply w-[45px] px-1;
+  
+          & > .star {
+            @apply h-full flex text-xs font-bold items-center text-zinc-900 transition-opacity whitespace-nowrap;
+  
+            &.golden {
+              @apply text-amber-300;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .osu_theme-switcher {
   @apply fixed bottom-4 right-4 md:bottom-8 md:right-8 p-2 rounded-full text-white cursor-pointer;
   @apply bg-mocha-mauve;
@@ -249,6 +387,11 @@
   @apply hover:border-mocha-red hover:dark:border-mocha-red;
   @apply transition-colors;
 } 
+
+.btn--show-more {
+  @extend .hover-bordered;
+  @apply w-full py-1 font-medium hover:text-mocha-mauve;
+}
 
 .login_page {
   @apply w-full min-h-[100vh] flex flex-col gap-8 items-center justify-center transition-colors;

@@ -1,5 +1,4 @@
-import type { StateContextType } from '@Types/context';
-import type { ScoreType } from '@Types/score';
+import type { StateContextType, TabType } from '@Types/context';
 import type { FC, ReactNode } from 'react'; 
 import { createContext, useContext, useState } from 'react';
 
@@ -8,8 +7,8 @@ interface Props {
 };
 
 const StateContextDefaultValues: StateContextType = {
-  activeScoreType: 'best',
-  setActiveScoreType: () => {},
+  activeTab: 'best',
+  setActiveTab: () => {},
 };
 
 const StateContext = createContext<StateContextType>(StateContextDefaultValues);
@@ -17,13 +16,13 @@ const StateContext = createContext<StateContextType>(StateContextDefaultValues);
 export const useStateContext = () => useContext(StateContext);
 
 export const StateProvider: FC<Props> = ({ children }) => {
-  const [ _activeScoreType, _setActiveScoreType ] = useState<ScoreType>(StateContextDefaultValues.activeScoreType);
+  const [ _activeTab, _setActiveTab ] = useState<TabType>(StateContextDefaultValues.activeTab);
 
-  const setActiveScoreType = (t: ScoreType) => _setActiveScoreType(t);
+  const setActiveTab = (t: TabType) => _setActiveTab(t);
 
   const value: StateContextType = {
-    activeScoreType: _activeScoreType,
-    setActiveScoreType
+    activeTab: _activeTab,
+    setActiveTab
   };
 
   return (

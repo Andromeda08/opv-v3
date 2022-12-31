@@ -21,7 +21,7 @@ export const Spinner : React.FC = ({}) => {
 }
 
 export const Loader = () => (
-  <div className='flex items-center justify-center p-4'>
+  <div className='bordered flex items-center justify-center p-4'>
     <Spinner />
   </div>
 );

@@ -1,37 +1,39 @@
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import type { ScoreType } from '@Types/score';
 import { useStateContext } from '@Contexts/StateContext';
 import { SignInButton, SignOutButton } from '@Components/Button';
+import { TabType } from '@Types/context';
 
 const ScoreTypeHeader: React.FC = () => {
   const { data: session } = useSession();
-  const { activeScoreType, setActiveScoreType } = useStateContext();
+  const { activeTab, setActiveTab } = useStateContext();
 
-  const onScoreTypeSelected = (t: ScoreType) => {
-    if (activeScoreType === t) {
+  const onTabSelected = (t: TabType) => {
+    if (activeTab === t) {
       return;
     }
     
-    setActiveScoreType(t);
+    setActiveTab(t);
   };
 
   const Dot: React.FC = () => (
     <div className='w-[2px] h-[12px] bg-zinc-400 dark:bg-zinc-700 rounded-full' />
   );
 
-  const NavItem: React.FC<{ t: ScoreType, v: string, onClick: (s: ScoreType) => void }> = ({ t, v, onClick }) => {
+  const NavItem: React.FC<{ t: TabType, v: string, onClick: (s: TabType) => void }> = ({ t, v, onClick }) => {
     return (
-      <button className={(activeScoreType === t) ? 'item active' : 'item'} onClick={ () => onClick(t) }>{ v }</button>
+      <button className={(activeTab === t) ? 'item active' : 'item'} onClick={ () => onClick(t) }>{ v }</button>
     );
   };
 
   return (
     <header>
       <nav>
-        <NavItem t='best' v='top scores' onClick={ onScoreTypeSelected } />
-        <NavItem t='firsts' v='firsts' onClick={ onScoreTypeSelected } />
-        <NavItem t='recent' v='recents' onClick={ onScoreTypeSelected } />
+        <NavItem t='best' v='top scores' onClick={ onTabSelected } />
+        <NavItem t='firsts' v='firsts' onClick={ onTabSelected } />
+        <NavItem t='recent' v='recents' onClick={ onTabSelected } />
+        <Dot />
+        <NavItem t='beatmaps' v='beatmaps' onClick={ onTabSelected } />
       </nav>
       <div>
         <Link href='/'>

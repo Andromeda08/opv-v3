@@ -1,27 +1,18 @@
-import {
-  FC,
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-  useEffect
-} from 'react';
+import type { FC, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { ThemeContextType, Theme } from '@Types/context';
 
-import { ThemeCtxType, Theme } from '@Types/context';
-
-const ThemeContextDefaultValues: ThemeCtxType = {
+const ThemeContextDefaultValues: ThemeContextType = {
   theme: 'dark',
   toggleTheme: () => {},
   setTheme: () => {},
 };
 
-const ThemeContext = createContext<ThemeCtxType>(ThemeContextDefaultValues);
+const ThemeContext = createContext<ThemeContextType>(ThemeContextDefaultValues);
 
 export const useThemeContext = () => useContext(ThemeContext);
 
-export const ThemeProvider : FC<{
-  children: ReactNode;
-}> = ({ children }) => {
+export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [ theme, _setTheme ] = useState<Theme>(ThemeContextDefaultValues.theme);
 
   const changeTheme = (t: Theme) => {
@@ -37,14 +28,12 @@ export const ThemeProvider : FC<{
     }
   };
 
-  useEffect(() => {
-    checkTheme();
-  }, [ theme ]);
+  useEffect(() => checkTheme(), [ theme ]);
 
   const toggleTheme = () => changeTheme((theme === 'dark' ? 'light' : 'dark'));
   const setTheme = (theme: Theme) => changeTheme(theme);
 
-  const value : ThemeCtxType = {
+  const value: ThemeContextType = {
     theme,
     toggleTheme,
     setTheme,

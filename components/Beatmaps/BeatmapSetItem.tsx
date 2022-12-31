@@ -45,7 +45,7 @@ const BeatmapSetItem: React.FC<{ bm: OsuBeatmapSet }> = ({ bm }) => {
             bm.beatmaps!
               .sort((a, b) => a.difficulty_rating - b.difficulty_rating)
               .map((e: OsuBeatmap, i: number) => (
-                <Link href={`https://osu.ppy.sh/beatmaps/${ e.id }`} target='_blank'>
+                <Link href={`https://osu.ppy.sh/beatmaps/${ e.id }`} target='_blank' key={i}>
                   <a className='marker' style={{ background: getDiffColor(e.difficulty_rating) }} />
                 </Link>
               ))
